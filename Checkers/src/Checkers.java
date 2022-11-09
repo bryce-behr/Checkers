@@ -1,6 +1,6 @@
 /***
- * The is the main checkers class for the project.
- * @authors Bryce Behr, David LeRoux
+ * This is the main checkers class for the project.
+ * @author Bryce Behr, David LeRoux
  ***/
 
 public class Checkers {
