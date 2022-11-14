@@ -1,5 +1,8 @@
 import java.util.Stack;
 
+/**
+ * This is the class that will contain the entire checkers game
+ */
 public class Game {
     /**
      * Member Variables
