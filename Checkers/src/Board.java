@@ -18,4 +18,14 @@ public class Board {
         return true;
     }
 
+    /**
+     * This method still needs code!!!
+     * this method returns a new Board with a moved piece
+     * @param oldSquare the old square you want to move from
+     * @param newSquare the new square you want to move to
+     * @return
+     */
+    public Board makeMove(Square oldSquare, Square newSquare) {
+        return null;
+    }
 }

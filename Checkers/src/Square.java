@@ -3,12 +3,16 @@
  **/
 
 public class Square {
-    // member variables
+    /**
+     * Member Variables
+     */
     private int team;
     private int x;
     private int y;
 
-    //Default Constructor
+    /**
+     * Default Constructor
+     */
     public Square() {
          team = 0;
          x = 0;
