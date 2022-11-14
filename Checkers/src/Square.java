@@ -4,7 +4,7 @@
 
 public class Square {
     // member variables
-    private boolean black;
+    private int team;
 
     // constructor
     public Square() {
@@ -12,13 +12,14 @@ public class Square {
     }
     public Square(boolean black){
         setBlack(black);
+
     }
 
-    public boolean getBlack(){
-        return black;
+    public int getTeam(){
+        return team;
     }
-    public void setBlack(boolean black){
-        this.black = black;
+    public void setTeam(int team){
+        this.team = team;
     }
 
 }
