@@ -2,11 +2,12 @@
  * This is the class for our checkers pieces ("Men")
  **/
 
-public class PlayerPieces {
+public class Man {
     // member variables
 
+
     // constructor
-    public PlayerPieces() {
+    public Man() {
 
     }
 
