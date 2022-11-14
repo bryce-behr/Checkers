@@ -17,7 +17,9 @@ public class Square {
 
     /**
      * Constructor
-     * @param team the team that is on that square (can be black[1], red[2] or "null"[0]
+     * @param team the team that is on that square (can be black[-2, -1], red[1, 2] or "null"[0]
+     *             A 2 denotes that it is a king and a 1 denotes that it is a normal man, the sign
+     *             indicates the team; either black or red
      * @param x the x co-ordinate on the board
      * @param y the y co-ordinate on the board
      */
@@ -28,7 +30,7 @@ public class Square {
     }
 
     /**
-     *
+     * Getter
      * @return the y co-ordinate
      */
     public int getY() {
@@ -36,6 +38,7 @@ public class Square {
     }
 
     /**
+     * Setter
      * Sets the member variable y
      * @param y the y co-ordinate
      */
@@ -44,7 +47,7 @@ public class Square {
     }
 
     /**
-     *
+     * Getter
      * @return the x co-ordinate
      */
     public int getX() {
@@ -52,6 +55,7 @@ public class Square {
     }
 
     /**
+     * Setter
      * Sets the member variable x
      * @param x the x co-ordinate
      */
@@ -60,7 +64,7 @@ public class Square {
     }
 
     /**
-     *
+     * Getter
      * @return What team is on that square
      */
     public int getTeam(){
@@ -68,6 +72,7 @@ public class Square {
     }
 
     /**
+     * Setter
      * Sets the member variable team
      * @param team What team is on that specific square
      */
