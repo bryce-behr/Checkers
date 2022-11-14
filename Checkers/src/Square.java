@@ -2,15 +2,15 @@
  * This is the class for our checkers pieces ("Men")
  **/
 
-public class Man {
+public class Square {
     // member variables
     private boolean black;
 
     // constructor
-    public Man() {
+    public Square() {
          black = true;
     }
-    public Man(boolean black){
+    public Square(boolean black){
         setBlack(black);
     }
 
