@@ -28,4 +28,12 @@ public class Board {
     public Board makeMove(Square oldSquare, Square newSquare) {
         return null;
     }
+
+    /**
+     * This method still needs code!!
+     * @return true if this board is a winning board and false if not
+     */
+    public boolean win() {
+        return false;
+    }
 }
