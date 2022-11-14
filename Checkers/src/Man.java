@@ -4,21 +4,21 @@
 
 public class Man {
     // member variables
-    private boolean black;
+    private int team;
 
     // constructor
     public Man() {
-         black = true;
+         team = 0;
     }
-    public Man(boolean black){
-        setBlack(black);
+    public Man(int team){
+        setTeam(team);
     }
 
-    public boolean getBlack(){
-        return black;
+    public int getTeam(){
+        return team;
     }
-    public void setBlack(boolean black){
-        this.black = black;
+    public void setTeam(int team){
+        this.team = team;
     }
 
 }
