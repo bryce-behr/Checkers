@@ -45,6 +45,8 @@ public class Game {
      * @return The board that has been popped from the boards stack
      */
     public Board back(){
+        count -= 1;
+        turn = count % 2;
         return boards.pop();
     }
 
