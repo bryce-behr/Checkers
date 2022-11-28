@@ -47,6 +47,23 @@ public class Board {
      * @return true if this board is a winning board and false if not
      */
     public boolean win() {
+        int redCount = 0;
+        int blackCount = 0;
+
+        for (int y=0; y<8; y++){
+            for (int x=0; x<8; x++){
+                if (positions[y][x].getTeam() > 0){
+                    redCount += 1;
+                }
+                if (positions[y][x].getTeam() < 0){
+                    blackCount += 1;
+                }
+            }
+        }
+        if ((redCount == 0)||(blackCount == 0)){
+            return true;
+        }
+
         return false;
     }
 }
