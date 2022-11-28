@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
     private Square[][] positions = new Square[8][8];
 
@@ -39,6 +41,7 @@ public class Board {
      * @return the new board which is the current state of the game
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
+        newSquare.setTeam(oldSquare.getTeam());
         return null;
     }
 
@@ -69,5 +72,42 @@ public class Board {
          */
 
         return false;
+    }
+
+    public ArrayList<ArrayList<Integer>> getPossibleMoves(Square sqr) {
+        ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
+
+        //no piece, no moves
+        if(sqr.getTeam() == 0) return moves;
+        //man, move forward
+        else if(Math.abs(sqr.getTeam()) == 1) {
+            //black, move up
+            if(sqr.getTeam() < 0) {
+                if()
+            }
+            //red, move down
+            else {
+
+            }
+        }
+        //king, move forward or backward
+        else if(Math.abs(sqr.getTeam()) == 2) {
+            //black, move up
+            if(sqr.getTeam() < 0) {
+
+            }
+            //red, move down
+            else {
+
+            }
+        }
+        else
+            return moves;
+
+
+    }
+
+    public Square getSquare(int r, int c) {
+        return positions[r][c];
     }
 }
