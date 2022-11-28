@@ -65,7 +65,7 @@ public class Game {
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
      */
-    public void makeMove(Integer oldSquare, Integer newSquare){
+    public void makeMove(Square oldSquare, Square newSquare){
         Board newBoard = boards.peek().makeMove(oldSquare, newSquare);
         boards.push(newBoard);
         count += 1;

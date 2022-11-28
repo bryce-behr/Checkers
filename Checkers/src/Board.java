@@ -1,18 +1,11 @@
 public class Board {
-    private int[][] positions;
+    private Square[][] positions;
 
     /**
      * this is the board constructor. It creates a board in the starting position
      **/
     public Board() {
-        positions = new int[][]{{0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 1, 0, 1},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {-1, 0, -1, 0, -1, 0, -1, 0},
-                {0, -1, 0, -1, 0, -1, 0, -1},
-                {-1, 0, -1, 0, -1, 0, -1, 0}};
+
     }
 
     /**
@@ -21,7 +14,7 @@ public class Board {
      * @param newSquare the square that you're going to
      * @return boolean true if valid move, false if invalid
      **/
-    public boolean checkValid(Integer oldSquare, Integer newSquare) {
+    public boolean checkValid(Square oldSquare, Square newSquare) {
         return true;
     }
 
@@ -32,7 +25,7 @@ public class Board {
      * @param newSquare the new square you want to move to
      * @return the new board which is the current state of the game
      */
-    public Board makeMove(Integer oldSquare, Integer newSquare) {
+    public Board makeMove(Square oldSquare, Square newSquare) {
         return null;
     }
 

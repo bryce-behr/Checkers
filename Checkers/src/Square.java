@@ -2,7 +2,7 @@
  * This is the class for our checkers pieces ("Men")
  **/
 
-public class Integer {
+public class Square {
     /**
      * Member Variables
      */
@@ -13,7 +13,7 @@ public class Integer {
     /**
      * Default Constructor
      */
-    public Integer() {
+    public Square() {
          team = 0;
          x = -1;
          y = -1;
@@ -27,7 +27,7 @@ public class Integer {
      * @param x the x co-ordinate on the board
      * @param y the y co-ordinate on the board
      */
-    public Integer(int team, int x, int y){
+    public Square(int team, int x, int y){
         setTeam(team);
         setX(x);
         setY(y);
