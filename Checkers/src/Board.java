@@ -1,11 +1,24 @@
 public class Board {
-    private Square[][] positions;
+    private Square[][] positions = new Square[8][8];
 
     /**
      * this is the board constructor. It creates a board in the starting position
      **/
     public Board() {
+        int[][] teams = new int[][]{{0, 1, 0, 1, 0, 1, 0, 1},
+                {1, 0, 1, 0, 1, 0, 1, 0},
+                {0, 1, 0, 1, 0, 1, 0, 1},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {-1, 0, -1, 0, -1, 0, -1, 0},
+                {0, -1, 0, -1, 0, -1, 0, -1},
+                {-1, 0, -1, 0, -1, 0, -1, 0}};
 
+        for (int y=0; y<8; y++){
+            for (int x=0; x<8; x++){
+                positions[y][x] = new Square(teams[y][x], x, y);
+            }
+        }
     }
 
     /**
