@@ -29,6 +29,21 @@ public class ConsoleDriver {
             int fX = Integer.valueOf(myScan.nextLine());
             System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of where you would like to move the piece to");
             int fY = Integer.valueOf(myScan.nextLine());
+
+            int team;
+            if (checkers.getTurn() == 0){
+                team = 1;
+            }
+            else{
+                team = -1;
+            }
+            checkers.makeMove(checkers.currentBoard().getSquare(iY, iX), new Square(team, fX, fY));
+
+            System.out.println("Do you want to go back? Enter 1 if you would like to go back and 2 if not");
+            int back = Integer.valueOf(myScan.nextLine());
+            if (back == 1){
+                checkers.back();
+            }
         }
 
         System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
