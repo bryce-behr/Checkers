@@ -64,6 +64,10 @@ public class Board {
             return true;
         }
 
+        /**
+         * TODO: check for all possible moves
+         */
+
         return false;
     }
 }
