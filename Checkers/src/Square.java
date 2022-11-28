@@ -7,16 +7,16 @@ public class Square {
      * Member Variables
      */
     private int team;
-    private int x;
-    private int y;
+    private int c;
+    private int r;
 
     /**
      * Default Constructor
      */
     public Square() {
          team = 0;
-         x = -1;
-         y = -1;
+         c = -1;
+         r = -1;
     }
 
     /**
@@ -24,47 +24,47 @@ public class Square {
      * @param team the team that is on that square (can be black[-2, -1], red[1, 2] or "null"[0]
      *             A 2 denotes that it is a king and a 1 denotes that it is a normal man, the sign
      *             indicates the team; either black or red
-     * @param x the x co-ordinate on the board
-     * @param y the y co-ordinate on the board
+     * @param c the x co-ordinate on the board
+     * @param r the y co-ordinate on the board
      */
-    public Square(int team, int x, int y){
+    public Square(int team, int c, int r){
         setTeam(team);
-        setX(x);
-        setY(y);
+        setC(c);
+        setR(r);
     }
 
     /**
      * Getter
      * @return the y co-ordinate
      */
-    public int getY() {
-        return y;
+    public int getR() {
+        return r;
     }
 
     /**
      * Setter
      * Sets the member variable y
-     * @param y the y co-ordinate
+     * @param r the y co-ordinate
      */
-    public void setY(int y) {
-        this.y = y;
+    public void setR(int r) {
+        this.r = r;
     }
 
     /**
      * Getter
      * @return the x co-ordinate
      */
-    public int getX() {
-        return x;
+    public int getC() {
+        return c;
     }
 
     /**
      * Setter
      * Sets the member variable x
-     * @param x the x co-ordinate
+     * @param c the x co-ordinate
      */
-    public void setX(int x) {
-        this.x = x;
+    public void setC(int c) {
+        this.c = c;
     }
 
     /**
