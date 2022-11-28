@@ -29,8 +29,8 @@ public class ConsoleDriver {
             int fX = Integer.valueOf(myScan.nextLine());
             System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of where you would like to move the piece to");
             int fY = Integer.valueOf(myScan.nextLine());
-
-            
         }
+
+        System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
     }
 }
