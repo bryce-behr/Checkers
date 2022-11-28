@@ -83,7 +83,7 @@ public class Board {
         else if(Math.abs(sqr.getTeam()) == 1) {
             //black, move up
             if(sqr.getTeam() < 0) {
-                if()
+
             }
             //red, move down
             else {
@@ -93,7 +93,7 @@ public class Board {
         //king, move forward or backward
         else if(Math.abs(sqr.getTeam()) == 2) {
             //black, move up
-            if(sqr.getTeam() < 0) {
+            if (sqr.getTeam() < 0) {
 
             }
             //red, move down
@@ -101,12 +101,16 @@ public class Board {
 
             }
         }
-        else
-            return moves;
 
-
+        return moves;
     }
 
+    /**
+     * this function returns the square at specific coordinates
+     * @param r, the row
+     * @param c, the colums
+     * @return the square at the coordinates
+     */
     public Square getSquare(int r, int c) {
         return positions[r][c];
     }
