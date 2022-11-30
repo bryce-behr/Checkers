@@ -81,56 +81,6 @@ public class Board {
         return false;
     }
 
-    public ArrayList<ArrayList<Integer>> abc(Square sqr) {
-        ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
-
-        boolean rightLimit = false;
-        boolean leftLimit = false;
-        boolean bottomLimit = false;
-        boolean topLimit = false;
-
-        int r = sqr.getR();
-        int c = sqr.getC();
-
-        if(r == 0) topLimit = true;
-        if(r == 7) topLimit = true;
-        if(c == 0) leftLimit = true;
-        if(c == 7) rightLimit = true;
-
-        //no piece, no moves
-        if(sqr.getTeam() == 0) return moves;
-        //man, move forward
-        else if(Math.abs(sqr.getTeam()) == 1) {
-            //black, move up
-            if(sqr.getTeam() < 0) {
-                //check that upLeft move is on board
-                if(!leftLimit && !topLimit) {
-
-                }
-                //check that upRight move is on the board
-                if(!rightLimit && !topLimit) {
-
-                }
-            }
-            //red, move down
-            else {
-                //check that
-            }
-        }
-        //king, move forward or backward
-        else if(Math.abs(sqr.getTeam()) == 2) {
-            //black, move up
-            if (sqr.getTeam() < 0) {
-
-            }
-            //red, move down
-            else {
-
-            }
-        }
-
-        return moves;
-    }
 
     public Square getUpLeftMove(Square sqr) {
         //make sure square is not on boarders
@@ -152,16 +102,16 @@ public class Board {
             - an enemy piece
          */
 
-
+        return sqr;
     }
 
     public ArrayList<Square> getPossibleMoves(Square sqr, int team) {
         ArrayList<Square> moves = new ArrayList<>();
 
-
+        return moves;
     }
 
-    public ArrayList<Square> getUpwardMoves(Square sqr){
+    public ArrayList<Square> getBlackManMoves(Square sqr){
         ArrayList<Square> moves = new ArrayList<>();
 
         int r = sqr.getR();
@@ -176,16 +126,35 @@ public class Board {
 
         if(topLimit) return moves;
 
-        if(!leftLimit) {
-            //check left moves
-            Square nextSquare = getSquare(r-1, c-1);
-            if(nextSquare.getTeam() == 0) {
+        //if on left limit
+        if(leftLimit) {
+            //check right move
+            Square nextSquare = getSquare(r-1, c+1);
+            int nextColor = getColor(nextSquare);
+            //if up right is empty
+            if(nextColor == 0) {
                 moves.add(nextSquare);
             }
-            else if()
+            //if up right is teammate
+            else if(nextSquare.getTeam() == -1) {
+                return moves;
+            }
+            //if up right is enemy
+            else {
+                //make sure he's not in the second from top row and jump spot is empty
+                if (r != 1 && getSquare(r - 2, c + 2).getTeam() == 0) {
+                    moves.addAll(getBlackManMoves(getSquare(r - 2, c + 2)));
+                }
+                return moves;
+            }
         }
-        if(!rightLimit) {
-            //check right moves
+        else if(rightLimit) {
+            //check left moves
+
+        }
+        else
+        {
+            //check both left and right
         }
 
         return moves;
@@ -197,8 +166,10 @@ public class Board {
      * @return -1 = black, 1 = red
      */
     private int getColor(Square sqr) {
-        if(sqr.getTeam() < 0) return -1;
-        else return 1;
+        int temp = sqr.getTeam();
+        if(temp < 0) return -1;
+        else if(temp > 0) return 1;
+        else return 0;
     }
 
 
