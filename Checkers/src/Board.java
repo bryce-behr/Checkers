@@ -7,18 +7,18 @@ public class Board {
      * this is the board constructor. It creates a board in the starting position
      **/
     public Board() {
-        int[][] teams = new int[][]{{0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 1, 0, 1},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0},
-                {-1, 0, -1, 0, -1, 0, -1, 0},
-                {0, -1, 0, -1, 0, -1, 0, -1},
-                {-1, 0, -1, 0, -1, 0, -1, 0}};
+        int[][] teams = {{ 0,  1,  0,  1,  0,  1,  0,  1},
+                         { 1,  0,  1,  0,  1,  0,  1,  0},
+                         { 0,  1,  0,  1,  0,  1,  0,  1},
+                         { 0,  0,  0,  0,  0,  0,  0,  0},
+                         { 0,  0,  0,  0,  0,  0,  0,  0},
+                         {-1,  0, -1,  0, -1,  0, -1,  0},
+                         { 0, -1,  0, -1,  0, -1,  0, -1},
+                         {-1,  0, -1,  0, -1,  0, -1,  0}};
 
-        for (int y=0; y<8; y++){
-            for (int x=0; x<8; x++){
-                positions[y][x] = new Square(teams[y][x], x, y);
+        for (int r=0; r<8; r++){
+            for (int c=0; c<8; c++){
+                positions[r][c] = new Square(teams[r][c], r, c);
             }
         }
     }
@@ -30,17 +30,24 @@ public class Board {
      * @return boolean true if valid move, false if invalid
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
+        /**
+         * TODO: everything
+         */
+
         return true;
     }
 
     /**
-     * This method still needs code!!!
      * this method returns a new Board with a moved piece
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
      * @return the new board which is the current state of the game
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
+        /**
+         * TODO: check that move is valid
+         */
+
         newSquare.setTeam(oldSquare.getTeam());
         return null;
     }
@@ -74,41 +81,102 @@ public class Board {
         return false;
     }
 
-    public ArrayList<ArrayList<Integer>> getPossibleMoves(Square sqr) {
-        ArrayList<ArrayList<Integer>> moves = new ArrayList<ArrayList<Integer>>();
 
-        //no piece, no moves
-        if(sqr.getTeam() == 0) return moves;
-        //man, move forward
-        else if(Math.abs(sqr.getTeam()) == 1) {
-            //black, move up
-            if(sqr.getTeam() < 0) {
+    public Square getUpLeftMove(Square sqr) {
+        //make sure square is not on boarders
+        if(sqr.getC() == 0) return null;
+        if(sqr.getR() == 0) return null;
 
+        Square nextSquare = getSquare(sqr.getC() - 1, sqr.getR() - 1);
+
+        //if next square is open, return nextSquare
+        if(nextSquare.getTeam() == 0) return nextSquare;
+
+        //if next square is occupied by the same team, return null
+        if(getColor(sqr) == getColor(nextSquare)) {
+            return null;
+        }
+
+        /*at this point the up left one space is:
+            - on the board
+            - an enemy piece
+         */
+
+        return sqr;
+    }
+
+    public ArrayList<Square> getPossibleMoves(Square sqr, int team) {
+        ArrayList<Square> moves = new ArrayList<>();
+
+        return moves;
+    }
+
+    public ArrayList<Square> getBlackManMoves(Square sqr){
+        ArrayList<Square> moves = new ArrayList<>();
+
+        int r = sqr.getR();
+        int c = sqr.getC();
+
+        boolean topLimit = false;
+        boolean leftLimit = false;
+        boolean rightLimit = false;
+        if(r == 0) topLimit = true;
+        if(c == 0) leftLimit = true;
+        if(c == 7) rightLimit = true;
+
+        if(topLimit) return moves;
+
+        //if on left limit
+        if(leftLimit) {
+            //check right move
+            Square nextSquare = getSquare(r-1, c+1);
+            int nextColor = getColor(nextSquare);
+            //if up right is empty
+            if(nextColor == 0) {
+                moves.add(nextSquare);
             }
-            //red, move down
+            //if up right is teammate
+            else if(nextSquare.getTeam() == -1) {
+                return moves;
+            }
+            //if up right is enemy
             else {
-
+                //make sure he's not in the second from top row and jump spot is empty
+                if (r != 1 && getSquare(r - 2, c + 2).getTeam() == 0) {
+                    moves.addAll(getBlackManMoves(getSquare(r - 2, c + 2)));
+                }
+                return moves;
             }
         }
-        //king, move forward or backward
-        else if(Math.abs(sqr.getTeam()) == 2) {
-            //black, move up
-            if (sqr.getTeam() < 0) {
+        else if(rightLimit) {
+            //check left moves
 
-            }
-            //red, move down
-            else {
-
-            }
+        }
+        else
+        {
+            //check both left and right
         }
 
         return moves;
     }
 
     /**
+     * this method returns a number indicating the color of the piece on a square
+     * @param sqr, the square in question
+     * @return -1 = black, 1 = red
+     */
+    private int getColor(Square sqr) {
+        int temp = sqr.getTeam();
+        if(temp < 0) return -1;
+        else if(temp > 0) return 1;
+        else return 0;
+    }
+
+
+    /**
      * this function returns the square at specific coordinates
      * @param r, the row
-     * @param c, the colums
+     * @param c, the column
      * @return the square at the coordinates
      */
     public Square getSquare(int r, int c) {
