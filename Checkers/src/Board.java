@@ -82,81 +82,54 @@ public class Board {
     }
 
 
-    public Square getUpLeftMove(Square sqr) {
-        //make sure square is not on boarders
-        if(sqr.getC() == 0) return null;
-        if(sqr.getR() == 0) return null;
-
-        Square nextSquare = getSquare(sqr.getC() - 1, sqr.getR() - 1);
-
-        //if next square is open, return nextSquare
-        if(nextSquare.getTeam() == 0) return nextSquare;
-
-        //if next square is occupied by the same team, return null
-        if(getColor(sqr) == getColor(nextSquare)) {
-            return null;
-        }
-
-        /*at this point the up left one space is:
-            - on the board
-            - an enemy piece
-         */
-
-        return sqr;
-    }
-
-    public ArrayList<Square> getPossibleMoves(Square sqr, int team) {
+    public ArrayList<Square> getPossibleMoves(Square sqr) {
         ArrayList<Square> moves = new ArrayList<>();
+        int team = sqr.getTeam();
+        int color = getColor(sqr);
+
+        if(team == 0) return moves;
+        else if(Math.abs(team) == 2) {
+            moves.addAll(getMoves(sqr, color, -1));
+            moves.addAll(getMoves(sqr, color, 1));
+        }
+        else {
+            moves.addAll(getMoves(sqr, color, color));
+        }
 
         return moves;
     }
 
-    public ArrayList<Square> getBlackManMoves(Square sqr){
+    public ArrayList<Square> getMoves(Square sqr, int color, int direction){
         ArrayList<Square> moves = new ArrayList<>();
 
         int r = sqr.getR();
         int c = sqr.getC();
 
-        boolean topLimit = false;
-        boolean leftLimit = false;
-        boolean rightLimit = false;
-        if(r == 0) topLimit = true;
-        if(c == 0) leftLimit = true;
-        if(c == 7) rightLimit = true;
+        Square nextLeft = getSquare(r+direction, c-1);
+        Square nextRight = getSquare(r+direction, c+1);
 
-        if(topLimit) return moves;
-
-        //if on left limit
-        if(leftLimit) {
-            //check right move
-            Square nextSquare = getSquare(r-1, c+1);
-            int nextColor = getColor(nextSquare);
-            //if up right is empty
-            if(nextColor == 0) {
-                moves.add(nextSquare);
+        if(nextLeft != null) {
+            if(nextLeft.getTeam() == 0) {
+                moves.add(nextLeft);
             }
-            //if up right is teammate
-            else if(nextSquare.getTeam() == -1) {
-                return moves;
-            }
-            //if up right is enemy
-            else {
-                //make sure he's not in the second from top row and jump spot is empty
-                if (r != 1 && getSquare(r - 2, c + 2).getTeam() == 0) {
-                    moves.addAll(getBlackManMoves(getSquare(r - 2, c + 2)));
+            else if(getColor(nextLeft) == color * -1) {
+                Square jumpSquare = getSquare(r+2*direction, c-2);
+                if(jumpSquare != null && getColor(jumpSquare) == 0) {
+                    moves.addAll(getMoves(jumpSquare, color, direction));
                 }
-                return moves;
             }
         }
-        else if(rightLimit) {
-            //check left moves
-
+        if(nextRight != null) {
+            if(nextRight.getTeam() == 0) {
+                moves.add(nextRight);
+            }
+            else if(getColor(nextRight) == color * -1) {
+                Square jumpSquare = getSquare(r+2*direction, c+2);
+                if(jumpSquare != null && getColor(jumpSquare) == 0) {
+                    moves.addAll(getMoves(jumpSquare, color, direction));
+                }
+            }
         }
-        else
-        {
-            //check both left and right
-        }
-
         return moves;
     }
 
@@ -164,9 +137,10 @@ public class Board {
      * this method returns a number indicating the color of the piece on a square
      * @param sqr, the square in question
      * @return -1 = black, 1 = red
-     */
+     **/
     private int getColor(Square sqr) {
         int temp = sqr.getTeam();
+
         if(temp < 0) return -1;
         else if(temp > 0) return 1;
         else return 0;
@@ -180,6 +154,7 @@ public class Board {
      * @return the square at the coordinates
      */
     public Square getSquare(int r, int c) {
-        return positions[r][c];
+        if(r < 0 || r > 7 || c < 0 || c > 7) return null;
+        else return positions[r][c];
     }
 }
