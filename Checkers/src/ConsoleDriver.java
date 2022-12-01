@@ -18,9 +18,9 @@ public class ConsoleDriver {
         */
         Game checkers = new Game();
 
-        /*
         while (checkers.hasWon() == false){
             Scanner myScan = new Scanner(System.in);
+            System.out.println(checkers.currentBoard().toString());
             System.out.println("Player " + (checkers.getTurn() +1) + " please enter the x coordinate of the piece you would like to move");
             int iX = Integer.valueOf(myScan.nextLine());
             System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of the piece you would like to move");
@@ -47,7 +47,6 @@ public class ConsoleDriver {
             }
         }
 
-        System.out.println("Player" + (checkers.getTurn() + 1) + "has won the "); */
-        System.out.println(checkers.currentBoard().toString());
+        System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
     }
 }
