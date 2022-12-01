@@ -97,6 +97,11 @@ public class Board {
     }
 
 
+    /**
+     * this method return all the possible moves of a given square
+     * @param sqr the square in question
+     * @returnm an arraylist of all the possible square that the original square could move to
+     */
     public ArrayList<Square> getPossibleMoves(Square sqr) {
         ArrayList<Square> moves = new ArrayList<>();
         int team = sqr.getTeam();
@@ -114,6 +119,13 @@ public class Board {
         return moves;
     }
 
+    /**
+     * this method returns all the possible moves of a certain square
+     * @param sqr the current sqr that we're trying to get possible moves of
+     * @param color the color of the original square (-1 for black, 0 for none, 1 for red)
+     * @param direction check moves either upward and downward (-1 for up, 1 for down)
+     * @return the list of all the possible moves in the given direction from the original square
+     */
     public ArrayList<Square> getMoves(Square sqr, int color, int direction){
         ArrayList<Square> moves = new ArrayList<>();
 
@@ -171,5 +183,19 @@ public class Board {
     public Square getSquare(int r, int c) {
         if(r < 0 || r > 7 || c < 0 || c > 7) return null;
         else return positions[r][c];
+    }
+
+    public String toString() {
+        String theBoard = "";
+        for(int r = 0; r < 8; r++) {
+            for(int c = 0; c < 8; c++) {
+                theBoard += " ";
+                int temp = getSquare(r, c).getTeam();
+                if(temp < 0) theBoard += temp;
+                else theBoard += " " + temp;
+            }
+            theBoard += "\n";
+        }
+        return theBoard;
     }
 }
