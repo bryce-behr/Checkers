@@ -30,26 +30,40 @@ public class Board {
      * @return boolean true if valid move, false if invalid
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
-        /**
-         * TODO: everything
-         */
+        ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
 
-        return true;
+        if(possibleMoves.contains(newSquare))
+            return true;
+        else return false;
     }
 
     /**
      * this method returns a new Board with a moved piece
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
-     * @return the new board which is the current state of the game
+     * @return if valid move, the new board which is the current state of the game. if not valid, null
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
-        /**
-         * TODO: check that move is valid
-         */
+        if(checkValid(oldSquare, newSquare)) {
+            //perform deep copy of new board
+            Board newBoard = new Board();
+            for(int r = 0; r < 8; r++) {
+                for(int c = 0; c < 8; c++) {
+                    Square tempOld = getSquare(r, c);
+                    Square tempNew = newBoard.getSquare(r, c);
+                    tempNew.setTeam(tempOld.getTeam());
+                    tempNew.setC(tempOld.getC());
+                    tempNew.setR(tempOld.getR());
+                }
+            }
 
-        newSquare.setTeam(oldSquare.getTeam());
-        return null;
+            newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
+            newBoard.getSquare(oldSquare.getR(), oldSquare.getC()).setTeam(0);
+
+            return newBoard;
+        }
+        else
+            return null;
     }
 
     /**
@@ -77,6 +91,7 @@ public class Board {
         /**
          * TODO: check for all possible moves
          */
+
 
         return false;
     }
