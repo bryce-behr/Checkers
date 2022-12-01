@@ -178,7 +178,7 @@ public class Board {
      * this function returns the square at specific coordinates
      * @param r, the row
      * @param c, the column
-     * @return the square at the coordinates
+     * @return the square at the coordinates, null if invalid coordinates
      */
     public Square getSquare(int r, int c) {
         if(r < 0 || r > 7 || c < 0 || c > 7) return null;
