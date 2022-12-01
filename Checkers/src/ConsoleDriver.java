@@ -51,6 +51,17 @@ public class ConsoleDriver {
             int iC = coordinates[1];
             int fR = coordinates[2];
             int fC = coordinates[3];
+            Scanner myScan = new Scanner(System.in);
+            System.out.println(checkers.currentBoard().toString());
+            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the x coordinate of the piece you would like to move");
+            int iX = Integer.valueOf(myScan.nextLine());
+            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of the piece you would like to move");
+            int iY = Integer.valueOf(myScan.nextLine());
+
+            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the x coordinate of where you would like to move the piece to");
+            int fX = Integer.valueOf(myScan.nextLine());
+            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of where you would like to move the piece to");
+            int fY = Integer.valueOf(myScan.nextLine());
 
             int team;
             if (checkers.getTurn() == 0){
