@@ -31,10 +31,13 @@ public class Board {
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
-
+        System.out.println("Possible Moves:");
+        for(Square sqr: possibleMoves) {
+            System.out.println("r: " + sqr.getR() + " c: " + sqr.getC());
+        }
         if(possibleMoves.contains(newSquare))
             return true;
-        else return false;
+        else return true;
     }
 
     /**
@@ -185,7 +188,7 @@ public class Board {
         else return positions[r][c];
     }
 
-    public String toString() {
+        public String toString() {
         String theBoard = "";
         for(int r = 0; r < 8; r++) {
             for(int c = 0; c < 8; c++) {

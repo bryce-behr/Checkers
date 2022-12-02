@@ -45,7 +45,7 @@ public class ConsoleDriver {
         }
         int fR = Integer.valueOf(input);
 
-        return (new int[]{iR, iC, fC, fR});
+        return (new int[]{iR, iC, fR, fC});
     }
 
     public static int askBack(){
