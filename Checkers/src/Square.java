@@ -27,7 +27,7 @@ public class Square {
      * @param c the x co-ordinate on the board
      * @param r the y co-ordinate on the board
      */
-    public Square(int team, int c, int r){
+    public Square(int team, int r, int c){
         setTeam(team);
         setC(c);
         setR(r);
