@@ -45,8 +45,30 @@ public class ConsoleDriver {
         }
         int fR = Integer.valueOf(input);
 
-        //myScan.close();
         return (new int[]{iR, iC, fC, fR});
+    }
+
+    public static int askBack(){
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("Do you want to go back? Enter 1 if you would like to go back and 2 if not");
+        String input = myScan.next();
+        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
+            System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter either a 1 or 2");
+            input = myScan.next();
+        }
+        return Integer.valueOf(input);
+    }
+
+    public static int askWhatGame(){
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("Would you like to play a 2 player game or a 1 player game against the computer?");
+        System.out.println("enter a 1 to play a 2 player game or a 2 to play against the computer");
+        String input = myScan.next();
+        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
+            System.out.println("The previous value you entered was invalid, please enter either a 1 or 2");
+            input = myScan.next();
+        }
+        return Integer.valueOf(input);
     }
 
     public static void onePlayerGame(){
@@ -55,13 +77,14 @@ public class ConsoleDriver {
 
     public static void twoPlayerGame(){
 
+        System.out.println(checkers.currentBoard().toString());
         while (checkers.hasWon() == false){
             int[] coordinates = askPlayers();
             int iR = coordinates[0];
             int iC = coordinates[1];
             int fR = coordinates[2];
             int fC = coordinates[3];
-            System.out.println(checkers.currentBoard().toString());
+
 
             int team;
             if (checkers.getTurn() == 0){
@@ -71,20 +94,14 @@ public class ConsoleDriver {
                 team = -1;
             }
             checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), new Square(team, fR, fC));
+            System.out.println(checkers.currentBoard().toString());
 
-            Scanner myScan = new Scanner(System.in);
-            System.out.println("Do you want to go back? Enter 1 if you would like to go back and 2 if not");
-            String input = myScan.next();
-            while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
-                System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter either a 1 or 2");
-                input = myScan.next();
-            }
-            int back = Integer.valueOf(input);
+            int back = askBack();
 
             if (back == 1){
                 checkers.back();
+                System.out.println(checkers.currentBoard().toString());
             }
-            //myScan.close();
         }
         System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
     }
@@ -105,16 +122,7 @@ public class ConsoleDriver {
          * can add a gui with minimal if any changes to game logic
          */
 
-        Scanner myScan = new Scanner(System.in);
-        System.out.println("Would you like to play a 2 player game or a 1 player game against the computer?");
-        System.out.println("enter a 1 to play a 2 player game or a 2 to play against the computer");
-        String input = myScan.next();
-        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
-            System.out.println("The previous value you entered was invalid, please enter either a 1 or 2");
-            input = myScan.next();
-        }
-        int decision = Integer.valueOf(input);
-        myScan.close();
+        int decision = askWhatGame();
 
         switch (decision){
             case 1:
