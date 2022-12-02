@@ -31,13 +31,13 @@ public class Board {
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
-        System.out.println("Possible Moves:");
+        System.out.println("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + ": ");
         for(Square sqr: possibleMoves) {
             System.out.println("r: " + sqr.getR() + " c: " + sqr.getC());
         }
         if(possibleMoves.contains(newSquare))
             return true;
-        else return true;
+        else return false;
     }
 
     /**

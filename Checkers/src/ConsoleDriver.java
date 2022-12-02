@@ -93,7 +93,7 @@ public class ConsoleDriver {
             else{
                 team = -1;
             }
-            checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), new Square(team, fR, fC));
+            checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
             System.out.println(checkers.currentBoard().toString());
 
             int back = askBack();
