@@ -6,36 +6,46 @@ public class ConsoleDriver {
 
     public static int[] askPlayers(){
         Scanner myScan = new Scanner(System.in);
-
+        String input;
         System.out.println("Player " + (checkers.getTurn() +1) + ": please enter the column number of the piece you would like to move");
-        while (!((Integer.valueOf(myScan.nextLine()) >= 0)&&(Integer.valueOf(myScan.nextLine()) <=7))){
+        input = myScan.next();
+        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
             System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
                                 "0 and 7 for the column number of the piece you would like to move");
+            input = myScan.next();
         }
-        int iC = Integer.valueOf(myScan.nextLine());
+        int iC = Integer.valueOf(input);
 
         System.out.println("Player " + (checkers.getTurn() +1) + " please enter the row number of the piece you would like to move");
-        while (!((Integer.valueOf(myScan.nextLine()) >= 0)&&(Integer.valueOf(myScan.nextLine()) <=7))){
+        input = myScan.next();
+        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
             System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
                     "0 and 7 for the row number of the piece you would like to move");
+            input = myScan.next();
         }
-        int iR= Integer.valueOf(myScan.nextLine());
+        int iR= Integer.valueOf(input);
 
         System.out.println("Player " + (checkers.getTurn() +1) + " please enter the column number of the square you would like to move the piece to");
-        while (!((Integer.valueOf(myScan.nextLine()) >= 0)&&(Integer.valueOf(myScan.nextLine()) <=7))){
+        if (myScan.hasNextLine()) {
+            input = myScan.next();
+        }
+        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
             System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
                     "0 and 7 for the column number of the square you would like to move the piece to");
+            input = myScan.next();
         }
-        int fC = Integer.valueOf(myScan.nextLine());
+        int fC = Integer.valueOf(input);
 
         System.out.println("Player " + (checkers.getTurn() +1) + " please enter the row number of the square you would like to move the piece to");
-        while (!((Integer.valueOf(myScan.nextLine()) >= 0)&&(Integer.valueOf(myScan.nextLine()) <=7))){
+        input = myScan.next();
+        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
             System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
                     "0 and 7 for the row number of the square you would like to move the piece to");
+            input = myScan.next();
         }
-        int fR = Integer.valueOf(myScan.nextLine());
+        int fR = Integer.valueOf(input);
 
-        myScan.close();
+        //myScan.close();
         return (new int[]{iR, iC, fC, fR});
     }
 
@@ -51,17 +61,7 @@ public class ConsoleDriver {
             int iC = coordinates[1];
             int fR = coordinates[2];
             int fC = coordinates[3];
-            Scanner myScan = new Scanner(System.in);
             System.out.println(checkers.currentBoard().toString());
-            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the x coordinate of the piece you would like to move");
-            int iX = Integer.valueOf(myScan.nextLine());
-            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of the piece you would like to move");
-            int iY = Integer.valueOf(myScan.nextLine());
-
-            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the x coordinate of where you would like to move the piece to");
-            int fX = Integer.valueOf(myScan.nextLine());
-            System.out.println("Player " + (checkers.getTurn() +1) + " please enter the y coordinate of where you would like to move the piece to");
-            int fY = Integer.valueOf(myScan.nextLine());
 
             int team;
             if (checkers.getTurn() == 0){
@@ -74,15 +74,17 @@ public class ConsoleDriver {
 
             Scanner myScan = new Scanner(System.in);
             System.out.println("Do you want to go back? Enter 1 if you would like to go back and 2 if not");
-            while (!((Integer.valueOf(myScan.nextLine()) >= 1)&&(Integer.valueOf(myScan.nextLine()) <=2))){
+            String input = myScan.next();
+            while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
                 System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter either a 1 or 2");
+                input = myScan.next();
             }
-            int back = Integer.valueOf(myScan.nextLine());
+            int back = Integer.valueOf(input);
 
             if (back == 1){
                 checkers.back();
             }
-            myScan.close();
+            //myScan.close();
         }
         System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
     }
@@ -106,10 +108,13 @@ public class ConsoleDriver {
         Scanner myScan = new Scanner(System.in);
         System.out.println("Would you like to play a 2 player game or a 1 player game against the computer?");
         System.out.println("enter a 1 to play a 2 player game or a 2 to play against the computer");
-        while (!((Integer.valueOf(myScan.nextLine()) >= 1)&&(Integer.valueOf(myScan.nextLine()) <=2))){
+        String input = myScan.next();
+        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
             System.out.println("The previous value you entered was invalid, please enter either a 1 or 2");
+            input = myScan.next();
         }
-        int decision = Integer.valueOf(myScan.nextLine());
+        int decision = Integer.valueOf(input);
+        myScan.close();
 
         switch (decision){
             case 1:
