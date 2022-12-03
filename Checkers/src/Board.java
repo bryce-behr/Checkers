@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Board {
-    private Square[][] positions = new Square[8][8];
+    private final Square[][] positions = new Square[8][8];
 
     /**
      * this is the board constructor. It creates a board in the starting position
@@ -38,9 +38,7 @@ public class Board {
         }
         System.out.println();
 
-        if(possibleMoves.contains(newSquare))
-            return true;
-        else return false;
+        return possibleMoves.contains(newSquare);
     }
 
     /**
@@ -138,7 +136,7 @@ public class Board {
     /**
      * this method returns all the possible moves of a given square
      * @param sqr the square in question
-     * @returnm an arraylist of all the possible squares that the original square could move to
+     * @return an arraylist of all the possible squares that the original square could move to
      **/
     public ArrayList<Square> getPossibleMoves(Square sqr) {
         ArrayList<Square> moves = new ArrayList<>();
@@ -212,11 +210,7 @@ public class Board {
      * @return -1 = black, 1 = red, 0 if none
      **/
     private int getColor(Square sqr) {
-        int temp = sqr.getTeam();
-
-        if(temp < 0) return -1;
-        else if(temp > 0) return 1;
-        else return 0;
+        return Integer.compare(sqr.getTeam(), 0);
     }
 
 
@@ -240,7 +234,7 @@ public class Board {
         theBoard.append("    0   1   2   3   4   5   6   7\n");
         for(int r = 0; r < 17; r++) {
             if(r%2 != 0) {
-                theBoard.append((r-1)/2 + " ");
+                theBoard.append((r - 1) / 2).append(" ");
             }
             else {
                 theBoard.append("  ");
@@ -271,7 +265,7 @@ public class Board {
             }
 
             if(r%2 != 0) {
-                theBoard.append(" " + (r-1)/2);
+                theBoard.append(" ").append((r - 1) / 2);
             }
 
             theBoard.append("\n");
