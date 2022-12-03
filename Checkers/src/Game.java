@@ -72,6 +72,11 @@ public class Game {
         turn = count % 2;
     }
 
+    /**
+     * Method
+     * calls the win() method of the current board to check if the current board is a winning or not
+     * @return returns the currentBoard.win() value
+     */
     public boolean hasWon(){
         return currentBoard().win();
     }

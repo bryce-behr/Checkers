@@ -2,8 +2,19 @@ import java.util.Scanner;
 
 public class ConsoleDriver {
 
-    private static Game checkers = new Game();
+    /**
+     * Member variables
+     */
+    private static Game checkers;
 
+    /**
+     * Method
+     * asks the player whose turn it is the coordinates of
+     * the piece they want to move and where they want to move it to.
+     * @return An array of integers in the following order: the row of the piece they want to move,
+     *          the column of the piece they want to move, the row they want to move the piece to,
+     *          the row they want to move the piece to.
+     */
     public static int[] askPlayers(){
         Scanner myScan = new Scanner(System.in);
         String input;
@@ -48,6 +59,11 @@ public class ConsoleDriver {
         return (new int[]{iR, iC, fR, fC});
     }
 
+    /**
+     * Method
+     * asks whether the player whose turn it is would like to go back and change their move
+     * @return AN int (1 if they want to go back and 2 if they don't want to go back)
+     */
     public static int askBack(){
         Scanner myScan = new Scanner(System.in);
         System.out.println("Do you want to go back? Enter 1 if you would like to go back and 2 if not");
@@ -59,6 +75,11 @@ public class ConsoleDriver {
         return Integer.valueOf(input);
     }
 
+    /**
+     * Method
+     * asks the user if they want to play a two player game or a game against the computer
+     * @return An int (1 if they want to play a two player game and 2 of they want to play against the computer
+     */
     public static int askWhatGame(){
         Scanner myScan = new Scanner(System.in);
         System.out.println("Would you like to play a 2 player game or a 1 player game against the computer?");
@@ -71,10 +92,18 @@ public class ConsoleDriver {
         return Integer.valueOf(input);
     }
 
+    /**
+     * Method
+     * runs a loop for a checkers game against the computer
+     */
     public static void onePlayerGame(){
 
     }
 
+    /**
+     * Method
+     * runs a loop for a checkers game against another player
+     */
     public static void twoPlayerGame(){
         System.out.println(checkers.currentBoard().toString());
         while (checkers.hasWon() == false){
@@ -105,6 +134,10 @@ public class ConsoleDriver {
         System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
     }
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
         /**
          * bulk of logic elsewhere
@@ -122,6 +155,7 @@ public class ConsoleDriver {
          */
         boolean flag = true;
         while (flag == true) {
+            checkers = new Game();
             int decision = askWhatGame();
 
             switch (decision) {
