@@ -31,10 +31,13 @@ public class Board {
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
-        System.out.println("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + ": ");
+
+        System.out.print("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + "): ");
         for(Square sqr: possibleMoves) {
-            System.out.println("r: " + sqr.getR() + " c: " + sqr.getC());
+            System.out.print("(r" + sqr.getR() + ", c" + sqr.getC() + "), ");
         }
+        System.out.println();
+
         if(possibleMoves.contains(newSquare))
             return true;
         else return false;
@@ -47,30 +50,33 @@ public class Board {
      * @return if valid move, the new board which is the current state of the game. if not valid, null
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
-        if(checkValid(oldSquare, newSquare)) {
-            //perform deep copy of new board
-            Board newBoard = new Board();
-            for(int r = 0; r < 8; r++) {
-                for(int c = 0; c < 8; c++) {
-                    Square tempOld = getSquare(r, c);
-                    Square tempNew = newBoard.getSquare(r, c);
-                    tempNew.setTeam(tempOld.getTeam());
-                    tempNew.setC(tempOld.getC());
-                    tempNew.setR(tempOld.getR());
-                }
-            }
 
+        //perform deep copy of new board
+        Board newBoard = new Board();
+        for(int r = 0; r < 8; r++) {
+            for(int c = 0; c < 8; c++) {
+                Square tempOld = getSquare(r, c);
+                Square tempNew = newBoard.getSquare(r, c);
+                tempNew.setTeam(tempOld.getTeam());
+                tempNew.setC(tempOld.getC());
+                tempNew.setR(tempOld.getR());
+            }
+        }
+
+        if(checkValid(oldSquare, newSquare)) {
             if(Math.abs(newSquare.getR() - oldSquare.getR()) > 1) {
                 newBoard.getSquare((oldSquare.getR() + newSquare.getR()) / 2,(oldSquare.getC() + newSquare.getC()) / 2).setTeam(0);
             }
 
-            newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
+            if((newSquare.getR() == 0 || newSquare.getR() == 7) && Math.abs(oldSquare.getTeam()) == 1) {
+                newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam() * 2);
+            }
+            else {
+                newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
+            }
             newBoard.getSquare(oldSquare.getR(), oldSquare.getC()).setTeam(0);
-
-            return newBoard;
         }
-        else
-            return null;
+        return newBoard;
     }
 
     /**
@@ -194,17 +200,52 @@ public class Board {
         else return positions[r][c];
     }
 
-        public String toString() {
-        String theBoard = "";
-        for(int r = 0; r < 8; r++) {
-            for(int c = 0; c < 8; c++) {
-                theBoard += " ";
-                int temp = getSquare(r, c).getTeam();
-                if(temp < 0) theBoard += temp;
-                else theBoard += " " + temp;
+    /**
+     * this method prints out the current board including lines and r and c labels
+     * @return a String of the current board
+     */
+    public String toString() {
+        StringBuilder theBoard = new StringBuilder();
+        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        for(int r = 0; r < 17; r++) {
+            if(r%2 != 0) {
+                theBoard.append((r-1)/2 + " ");
             }
-            theBoard += "\n";
+            else {
+                theBoard.append("  ");
+            }
+
+            for(int c = 0; c < 17; c++) {
+                if(r % 2 == 0) {
+                    if(r == 0 || r == 16) {
+                        if(c == 16) theBoard.append("-");
+                        else theBoard.append("--");
+                    }
+                    else if(c % 2 == 0 ) {
+                        theBoard.append("|");
+                    }
+                    else {
+                        theBoard.append("---");
+                    }
+                }
+                else if(c % 2 == 0) {
+                    theBoard.append("|");
+                }
+                else {
+                    //theBoard += " ";
+                    int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
+                    if(temp < 0) theBoard.append(temp).append(" ");
+                    else theBoard.append(" ").append(temp).append(" ");
+                }
+            }
+
+            if(r%2 != 0) {
+                theBoard.append(" " + (r-1)/2);
+            }
+
+            theBoard.append("\n");
         }
-        return theBoard;
+        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        return theBoard.toString();
     }
 }
