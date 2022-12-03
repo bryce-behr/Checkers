@@ -108,33 +108,30 @@ public class Board {
     }
 
     /**
-     * This method still needs code!!
+     * This method tells us if a team has won
      * @return true if this board is a winning board and false if not
      */
     public boolean win() {
         int redCount = 0;
         int blackCount = 0;
 
-        for (int y=0; y<8; y++){
-            for (int x=0; x<8; x++){
-                if (positions[y][x].getTeam() > 0){
+        ArrayList<Square> redPossibleMoves = new ArrayList<>();
+        ArrayList<Square> blackPossibleMoves = new ArrayList<>();
+
+        for (int r=0; r<8; r++){
+            for (int c=0; c<8; c++){
+                if (positions[r][c].getTeam() > 0){
                     redCount += 1;
+                    redPossibleMoves.addAll(getPossibleMoves(getSquare(r, c)));
                 }
-                if (positions[y][x].getTeam() < 0){
+                if (positions[r][c].getTeam() < 0){
                     blackCount += 1;
+                    blackPossibleMoves.addAll(getPossibleMoves(getSquare(r, c)));
                 }
             }
         }
-        if ((redCount == 0)||(blackCount == 0)){
-            return true;
-        }
 
-        /**
-         * TODO: check for all possible moves
-         */
-
-
-        return false;
+        return redCount == 0 || blackCount == 0 || redPossibleMoves.size() == 0 || blackPossibleMoves.size() == 0;
     }
 
 
