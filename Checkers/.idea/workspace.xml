@@ -7,9 +7,7 @@
     <list default="true" id="a8d1c8bb-02a7-4aef-9bcd-60737950389c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Checkers/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Checkers/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/ConsoleDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Checkers/ConsoleDriver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConsoleDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsoleDriver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

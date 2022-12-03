@@ -145,6 +145,7 @@ public class Board {
             else if(getColor(nextLeft) == color * -1) {
                 Square jumpSquare = getSquare(r+2*direction, c-2);
                 if(jumpSquare != null && getColor(jumpSquare) == 0) {
+                    moves.add(jumpSquare);
                     moves.addAll(getMoves(jumpSquare, color, direction));
                 }
             }
