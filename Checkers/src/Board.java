@@ -31,42 +31,80 @@ public class Board {
      **/
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
-        System.out.println("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + ": ");
+
+        System.out.print("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + "): ");
         for(Square sqr: possibleMoves) {
-            System.out.println("r: " + sqr.getR() + " c: " + sqr.getC());
+            System.out.print("(r" + sqr.getR() + ", c" + sqr.getC() + "), ");
         }
+        System.out.println();
+
         if(possibleMoves.contains(newSquare))
             return true;
         else return false;
     }
 
     /**
-     * this method returns a new Board with a moved piece
+     * this method returns a deep copy of the new Board with the moved piece if it's a valid move and a
+     * deep copy of the board is it's not a valid move
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
-     * @return if valid move, the new board which is the current state of the game. if not valid, null
+     * @return if valid move, the new board which is the current state of the game. if not valid, deep copy of changed board
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
+
+        //deep copy of new board
+        Board newBoard = new Board();
+        for(int r = 0; r < 8; r++) {
+            for(int c = 0; c < 8; c++) {
+                Square tempOld = getSquare(r, c);
+                Square tempNew = newBoard.getSquare(r, c);
+                tempNew.setTeam(tempOld.getTeam());
+                tempNew.setC(tempOld.getC());
+                tempNew.setR(tempOld.getR());
+            }
+        }
+
+        //move the piece if valid
         if(checkValid(oldSquare, newSquare)) {
-            //perform deep copy of new board
-            Board newBoard = new Board();
-            for(int r = 0; r < 8; r++) {
-                for(int c = 0; c < 8; c++) {
-                    Square tempOld = getSquare(r, c);
-                    Square tempNew = newBoard.getSquare(r, c);
-                    tempNew.setTeam(tempOld.getTeam());
-                    tempNew.setC(tempOld.getC());
-                    tempNew.setR(tempOld.getR());
-                }
+            //if a piece got jumped set it to 0
+            if(Math.abs(newSquare.getR() - oldSquare.getR()) > 1) {
+                newBoard.getSquare((oldSquare.getR() + newSquare.getR()) / 2,(oldSquare.getC() + newSquare.getC()) / 2).setTeam(0);
             }
 
-            newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
+            //if a man reaches the end of the board make it a king otherwise just move the man
+            if((newSquare.getR() == 0 || newSquare.getR() == 7) && Math.abs(oldSquare.getTeam()) == 1) {
+                newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam() * 2);
+            }
+            else {
+                newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
+            }
             newBoard.getSquare(oldSquare.getR(), oldSquare.getC()).setTeam(0);
-
-            return newBoard;
         }
-        else
-            return null;
+        return newBoard;
+    }
+
+    /**
+     * this method makes the team of the given color do a completely random move
+     * @param color the color to move (-1 for black, 1 for red)
+     * @return a new board with the random move
+     */
+    public Board makeRandomMove(int color) {
+        ArrayList<Square> piecesWithMoves = new ArrayList<>();
+        for(int r = 0; r < 8; r++) {
+            for(int c = 0; c < 8; c++) {
+                if(getColor(getSquare(r, c)) == color && getPossibleMoves(getSquare(r, c)).size() != 0) {
+                    piecesWithMoves.add(getSquare(r, c));
+                }
+            }
+        }
+
+        int randPiece = (int)(Math.random() * piecesWithMoves.size());
+        Square oldSquare = piecesWithMoves.get(randPiece);
+        ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
+        int randMove = (int)(Math.random() * possibleMoves.size());
+        Square newSquare = possibleMoves.get(randMove);
+
+        return makeMove(oldSquare, newSquare);
     }
 
     /**
@@ -101,20 +139,23 @@ public class Board {
 
 
     /**
-     * this method return all the possible moves of a given square
+     * this method returns all the possible moves of a given square
      * @param sqr the square in question
-     * @returnm an arraylist of all the possible square that the original square could move to
-     */
+     * @returnm an arraylist of all the possible squares that the original square could move to
+     **/
     public ArrayList<Square> getPossibleMoves(Square sqr) {
         ArrayList<Square> moves = new ArrayList<>();
         int team = sqr.getTeam();
         int color = getColor(sqr);
 
+        //if it's an empty square there's no possible moves
         if(team == 0) return moves;
+        //if it's a king allow upward and downward move
         else if(Math.abs(team) == 2) {
             moves.addAll(getMoves(sqr, color, -1));
             moves.addAll(getMoves(sqr, color, 1));
         }
+        //if it's a man allow moves in the appropriate direction
         else {
             moves.addAll(getMoves(sqr, color, color));
         }
@@ -138,6 +179,7 @@ public class Board {
         Square nextLeft = getSquare(r+direction, c-1);
         Square nextRight = getSquare(r+direction, c+1);
 
+        //if there is a next left see if it's a square you can move to or jump over
         if(nextLeft != null) {
             if(nextLeft.getTeam() == 0) {
                 moves.add(nextLeft);
@@ -145,10 +187,13 @@ public class Board {
             else if(getColor(nextLeft) == color * -1) {
                 Square jumpSquare = getSquare(r+2*direction, c-2);
                 if(jumpSquare != null && getColor(jumpSquare) == 0) {
-                    moves.addAll(getMoves(jumpSquare, color, direction));
+                    moves.add(jumpSquare);
+                    //moves.addAll(getMoves(jumpSquare, color, direction));
                 }
             }
         }
+
+        //if there is a next right see if it's a square you can move to or jump over
         if(nextRight != null) {
             if(nextRight.getTeam() == 0) {
                 moves.add(nextRight);
@@ -156,7 +201,8 @@ public class Board {
             else if(getColor(nextRight) == color * -1) {
                 Square jumpSquare = getSquare(r+2*direction, c+2);
                 if(jumpSquare != null && getColor(jumpSquare) == 0) {
-                    moves.addAll(getMoves(jumpSquare, color, direction));
+                    moves.add(jumpSquare);
+                    //moves.addAll(getMoves(jumpSquare, color, direction));
                 }
             }
         }
@@ -166,7 +212,7 @@ public class Board {
     /**
      * this method returns a number indicating the color of the piece on a square
      * @param sqr, the square in question
-     * @return -1 = black, 1 = red
+     * @return -1 = black, 1 = red, 0 if none
      **/
     private int getColor(Square sqr) {
         int temp = sqr.getTeam();
@@ -188,17 +234,52 @@ public class Board {
         else return positions[r][c];
     }
 
-        public String toString() {
-        String theBoard = "";
-        for(int r = 0; r < 8; r++) {
-            for(int c = 0; c < 8; c++) {
-                theBoard += " ";
-                int temp = getSquare(r, c).getTeam();
-                if(temp < 0) theBoard += temp;
-                else theBoard += " " + temp;
+    /**
+     * this method prints out the current board including lines and r and c labels
+     * @return a String of the current board
+     */
+    public String toString() {
+        StringBuilder theBoard = new StringBuilder();
+        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        for(int r = 0; r < 17; r++) {
+            if(r%2 != 0) {
+                theBoard.append((r-1)/2 + " ");
             }
-            theBoard += "\n";
+            else {
+                theBoard.append("  ");
+            }
+
+            for(int c = 0; c < 17; c++) {
+                if(r % 2 == 0) {
+                    if(r == 0 || r == 16) {
+                        if(c == 16) theBoard.append("-");
+                        else theBoard.append("--");
+                    }
+                    else if(c % 2 == 0 ) {
+                        theBoard.append("|");
+                    }
+                    else {
+                        theBoard.append("---");
+                    }
+                }
+                else if(c % 2 == 0) {
+                    theBoard.append("|");
+                }
+                else {
+                    //theBoard += " ";
+                    int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
+                    if(temp < 0) theBoard.append(temp).append(" ");
+                    else theBoard.append(" ").append(temp).append(" ");
+                }
+            }
+
+            if(r%2 != 0) {
+                theBoard.append(" " + (r-1)/2);
+            }
+
+            theBoard.append("\n");
         }
-        return theBoard;
+        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        return theBoard.toString();
     }
 }

@@ -76,7 +76,6 @@ public class ConsoleDriver {
     }
 
     public static void twoPlayerGame(){
-
         System.out.println(checkers.currentBoard().toString());
         while (checkers.hasWon() == false){
             int[] coordinates = askPlayers();
