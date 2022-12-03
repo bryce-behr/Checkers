@@ -82,11 +82,11 @@ public class ConsoleDriver {
      */
     public static int askWhatGame(){
         Scanner myScan = new Scanner(System.in);
-        System.out.println("Would you like to play a 2 player game or a 1 player game against the computer?");
-        System.out.println("enter a 1 to play a 2 player game or a 2 to play against the computer");
+        System.out.println("Would you like to play a one player game or a 2 player game of checkers?");
+        System.out.println("enter a '1' to play a one player game and enter '2' to play a 2 player game");
         String input = myScan.next();
         while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
-            System.out.println("The previous value you entered was invalid, please enter either a 1 or 2");
+            System.out.println("The previous value you entered was invalid, You entered: " + input +" please enter either a '1' or '2'");
             input = myScan.next();
         }
         return Integer.valueOf(input);
@@ -105,7 +105,12 @@ public class ConsoleDriver {
      * runs a loop for a checkers game against another player
      */
     public static void twoPlayerGame(){
+
+        checkers = new Game();
+
+        System.out.println("Player " + (checkers.getTurn() + 1) + " starts the game");
         System.out.println(checkers.currentBoard().toString());
+
         while (checkers.hasWon() == false){
             int[] coordinates = askPlayers();
             int iR = coordinates[0];
@@ -155,17 +160,18 @@ public class ConsoleDriver {
          */
         boolean flag = true;
         while (flag == true) {
-            checkers = new Game();
             int decision = askWhatGame();
-
             switch (decision) {
                 case 1:
-                    twoPlayerGame();
-                    break;
-                case 2:
                     onePlayerGame();
                     break;
+                case 2:
+                    twoPlayerGame();
+                    break;
             }
+            System.out.println("Game over...");
+            System.out.println("Starting new game");
         }
+        System.out.println("PROGRAM CLOSED");
     }
 }
