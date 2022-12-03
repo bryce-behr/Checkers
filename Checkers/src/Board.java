@@ -84,6 +84,30 @@ public class Board {
     }
 
     /**
+     * this method makes the team of the given color do a completely random move
+     * @param color the color to move (-1 for black, 1 for red)
+     * @return a new board with the random move
+     */
+    public Board makeRandomMove(int color) {
+        ArrayList<Square> piecesWithMoves = new ArrayList<>();
+        for(int r = 0; r < 8; r++) {
+            for(int c = 0; c < 8; c++) {
+                if(getColor(getSquare(r, c)) == color && getPossibleMoves(getSquare(r, c)).size() != 0) {
+                    piecesWithMoves.add(getSquare(r, c));
+                }
+            }
+        }
+
+        int randPiece = (int)(Math.random() * piecesWithMoves.size());
+        Square oldSquare = piecesWithMoves.get(randPiece);
+        ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
+        int randMove = (int)(Math.random() * possibleMoves.size());
+        Square newSquare = possibleMoves.get(randMove);
+
+        return makeMove(oldSquare, newSquare);
+    }
+
+    /**
      * This method still needs code!!
      * @return true if this board is a winning board and false if not
      */
@@ -115,7 +139,7 @@ public class Board {
 
 
     /**
-     * this method return all the possible moves of a given square
+     * this method returns all the possible moves of a given square
      * @param sqr the square in question
      * @returnm an arraylist of all the possible squares that the original square could move to
      **/
