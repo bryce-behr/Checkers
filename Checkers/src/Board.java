@@ -41,7 +41,7 @@ public class Board {
     }
 
     /**
-     * this method returns a new Board with a moved piece
+     * this method returns a deep copy of the new Board with the moved piece
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
      * @return if valid move, the new board which is the current state of the game. if not valid, null
@@ -58,6 +58,10 @@ public class Board {
                     tempNew.setC(tempOld.getC());
                     tempNew.setR(tempOld.getR());
                 }
+            }
+
+            if(Math.abs(newSquare.getR() - oldSquare.getR()) > 1) {
+                newBoard.getSquare((oldSquare.getR() + newSquare.getR()) / 2,(oldSquare.getC() + newSquare.getC()) / 2).setTeam(0);
             }
 
             newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam());
@@ -146,7 +150,7 @@ public class Board {
                 Square jumpSquare = getSquare(r+2*direction, c-2);
                 if(jumpSquare != null && getColor(jumpSquare) == 0) {
                     moves.add(jumpSquare);
-                    moves.addAll(getMoves(jumpSquare, color, direction));
+                    //moves.addAll(getMoves(jumpSquare, color, direction));
                 }
             }
         }
@@ -157,7 +161,8 @@ public class Board {
             else if(getColor(nextRight) == color * -1) {
                 Square jumpSquare = getSquare(r+2*direction, c+2);
                 if(jumpSquare != null && getColor(jumpSquare) == 0) {
-                    moves.addAll(getMoves(jumpSquare, color, direction));
+                    moves.add(jumpSquare);
+                    //moves.addAll(getMoves(jumpSquare, color, direction));
                 }
             }
         }
