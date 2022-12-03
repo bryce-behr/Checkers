@@ -121,16 +121,18 @@ public class ConsoleDriver {
          *
          * can add a gui with minimal if any changes to game logic
          */
+        boolean flag = true;
+        while (flag == true) {
+            int decision = askWhatGame();
 
-        int decision = askWhatGame();
-
-        switch (decision){
-            case 1:
-                twoPlayerGame();
-                break;
-            case 2:
-                onePlayerGame();
-                break;
+            switch (decision) {
+                case 1:
+                    twoPlayerGame();
+                    break;
+                case 2:
+                    onePlayerGame();
+                    break;
+            }
         }
     }
 }
