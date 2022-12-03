@@ -44,14 +44,15 @@ public class Board {
     }
 
     /**
-     * this method returns a deep copy of the new Board with the moved piece
+     * this method returns a deep copy of the new Board with the moved piece if it's a valid move and a
+     * deep copy of the board is it's not a valid move
      * @param oldSquare the old square you want to move from
      * @param newSquare the new square you want to move to
-     * @return if valid move, the new board which is the current state of the game. if not valid, null
+     * @return if valid move, the new board which is the current state of the game. if not valid, deep copy of changed board
      */
     public Board makeMove(Square oldSquare, Square newSquare) {
 
-        //perform deep copy of new board
+        //deep copy of new board
         Board newBoard = new Board();
         for(int r = 0; r < 8; r++) {
             for(int c = 0; c < 8; c++) {
@@ -63,11 +64,14 @@ public class Board {
             }
         }
 
+        //move the piece if valid
         if(checkValid(oldSquare, newSquare)) {
+            //if a piece got jumped set it to 0
             if(Math.abs(newSquare.getR() - oldSquare.getR()) > 1) {
                 newBoard.getSquare((oldSquare.getR() + newSquare.getR()) / 2,(oldSquare.getC() + newSquare.getC()) / 2).setTeam(0);
             }
 
+            //if a man reaches the end of the board make it a king otherwise just move the man
             if((newSquare.getR() == 0 || newSquare.getR() == 7) && Math.abs(oldSquare.getTeam()) == 1) {
                 newBoard.getSquare(newSquare.getR(), newSquare.getC()).setTeam(oldSquare.getTeam() * 2);
             }
@@ -113,18 +117,21 @@ public class Board {
     /**
      * this method return all the possible moves of a given square
      * @param sqr the square in question
-     * @returnm an arraylist of all the possible square that the original square could move to
-     */
+     * @returnm an arraylist of all the possible squares that the original square could move to
+     **/
     public ArrayList<Square> getPossibleMoves(Square sqr) {
         ArrayList<Square> moves = new ArrayList<>();
         int team = sqr.getTeam();
         int color = getColor(sqr);
 
+        //if it's an empty square there's no possible moves
         if(team == 0) return moves;
+        //if it's a king allow upward and downward move
         else if(Math.abs(team) == 2) {
             moves.addAll(getMoves(sqr, color, -1));
             moves.addAll(getMoves(sqr, color, 1));
         }
+        //if it's a man allow moves in the appropriate direction
         else {
             moves.addAll(getMoves(sqr, color, color));
         }
@@ -148,6 +155,7 @@ public class Board {
         Square nextLeft = getSquare(r+direction, c-1);
         Square nextRight = getSquare(r+direction, c+1);
 
+        //if there is a next left see if it's a square you can move to or jump over
         if(nextLeft != null) {
             if(nextLeft.getTeam() == 0) {
                 moves.add(nextLeft);
@@ -160,6 +168,8 @@ public class Board {
                 }
             }
         }
+
+        //if there is a next right see if it's a square you can move to or jump over
         if(nextRight != null) {
             if(nextRight.getTeam() == 0) {
                 moves.add(nextRight);
@@ -178,7 +188,7 @@ public class Board {
     /**
      * this method returns a number indicating the color of the piece on a square
      * @param sqr, the square in question
-     * @return -1 = black, 1 = red
+     * @return -1 = black, 1 = red, 0 if none
      **/
     private int getColor(Square sqr) {
         int temp = sqr.getTeam();
