@@ -15,46 +15,82 @@ public class ConsoleDriver {
      *          the column of the piece they want to move, the row they want to move the piece to,
      *          the row they want to move the piece to.
      */
-    public static int[] askPlayers(){
+    public static int[] askPlayers(int cteam){
+        /**
+         * team == 0 --> black
+         * team == 1 --> red
+         */
+        int team = 2;
+        int iR = 0;
+        int iC = 0;
+        int fR = 0;
+        int fC = 0;
+        boolean valid = false;
+
         Scanner myScan = new Scanner(System.in);
-        String input;
-        System.out.println("Player " + (checkers.getTurn() +1) + ": please enter the column number of the piece you would like to move");
-        input = myScan.next();
-        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
-            System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
-                                "0 and 7 for the column number of the piece you would like to move");
-            input = myScan.next();
-        }
-        int iC = Integer.valueOf(input);
+        String input = "";
 
-        System.out.println("Player " + (checkers.getTurn() +1) + " please enter the row number of the piece you would like to move");
-        input = myScan.next();
-        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
-            System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
-                    "0 and 7 for the row number of the piece you would like to move");
+        valid = false;
+        while (valid == false) {
+            System.out.println("Player " + (checkers.getTurn() + 1) + ": please enter the column number of the piece you would like to move");
             input = myScan.next();
-        }
-        int iR= Integer.valueOf(input);
+            while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 7))) {
+                System.out.println("Player " + (checkers.getTurn() + 1) + ": the previous value you entered was invalid, please enter a number between " +
+                        "0 and 7 for the column number of the piece you would like to move");
+                input = myScan.next();
+            }
+            iC = Integer.valueOf(input);
 
-        System.out.println("Player " + (checkers.getTurn() +1) + " please enter the column number of the square you would like to move the piece to");
-        if (myScan.hasNextLine()) {
+            System.out.println("Player " + (checkers.getTurn() + 1) + " please enter the row number of the piece you would like to move");
             input = myScan.next();
-        }
-        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
-            System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
-                    "0 and 7 for the column number of the square you would like to move the piece to");
-            input = myScan.next();
-        }
-        int fC = Integer.valueOf(input);
+            while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 7))) {
+                System.out.println("Player " + (checkers.getTurn() + 1) + ": the previous value you entered was invalid, please enter a number between " +
+                        "0 and 7 for the row number of the piece you would like to move");
+                input = myScan.next();
+            }
+            iR = Integer.valueOf(input);
 
-        System.out.println("Player " + (checkers.getTurn() +1) + " please enter the row number of the square you would like to move the piece to");
-        input = myScan.next();
-        while (!((Integer.valueOf(input) >= 0)&&(Integer.valueOf(input) <=7))){
-            System.out.println("Player " + (checkers.getTurn() +1) + ": the previous value you entered was invalid, please enter a number between " +
-                    "0 and 7 for the row number of the square you would like to move the piece to");
-            input = myScan.next();
+
+            if (checkers.currentBoard().getSquare(iR, iC).getTeam() > 0){
+                team = 1;
+            }
+            else if (checkers.currentBoard().getSquare(iR, iC).getTeam() < 0){
+                team = 0;
+            }
+            else{
+                team = 2;
+            }
+
+            if (team == cteam){
+                valid = true;
+            }
+            else{
+                System.out.println("Please select a valid square");
+            }
         }
-        int fR = Integer.valueOf(input);
+
+        valid = false;
+        while (valid == false) {
+            System.out.println("Player " + (checkers.getTurn() + 1) + " please enter the column number of the square you would like to move the piece to");
+            if (myScan.hasNextLine()) {
+                input = myScan.next();
+            }
+            while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 7))) {
+                System.out.println("Player " + (checkers.getTurn() + 1) + ": the previous value you entered was invalid, please enter a number between " +
+                        "0 and 7 for the column number of the square you would like to move the piece to");
+                input = myScan.next();
+            }
+            fC = Integer.valueOf(input);
+
+            System.out.println("Player " + (checkers.getTurn() + 1) + " please enter the row number of the square you would like to move the piece to");
+            input = myScan.next();
+            while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 7))) {
+                System.out.println("Player " + (checkers.getTurn() + 1) + ": the previous value you entered was invalid, please enter a number between " +
+                        "0 and 7 for the row number of the square you would like to move the piece to");
+                input = myScan.next();
+            }
+            fR = Integer.valueOf(input);
+        }
 
         return (new int[]{iR, iC, fR, fC});
     }
@@ -112,12 +148,11 @@ public class ConsoleDriver {
         System.out.println(checkers.currentBoard().toString());
 
         while (checkers.hasWon() == false){
-            int[] coordinates = askPlayers();
+            int[] coordinates = askPlayers(checkers.getTurn());
             int iR = coordinates[0];
             int iC = coordinates[1];
             int fR = coordinates[2];
             int fC = coordinates[3];
-
 
             int team;
             if (checkers.getTurn() == 0){
@@ -126,6 +161,7 @@ public class ConsoleDriver {
             else{
                 team = -1;
             }
+
             checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
             System.out.println(checkers.currentBoard().toString());
 
