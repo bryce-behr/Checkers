@@ -259,8 +259,11 @@ public class Board {
                 else {
                     //theBoard += " ";
                     int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
-                    if(temp < 0) theBoard.append(temp).append(" ");
-                    else theBoard.append(" ").append(temp).append(" ");
+                    if(temp < 0) theBoard.append(" X").append(" ");
+                    //if(temp < 0) theBoard.append(temp).append(" ");
+                    else if (temp == 0) theBoard.append(" ").append(" ").append(" ");
+                    else theBoard.append(" ").append("O").append(" ");
+                    //else theBoard.append(" ").append(temp).append(" ");
                 }
             }
 
