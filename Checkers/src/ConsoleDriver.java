@@ -90,6 +90,7 @@ public class ConsoleDriver {
                 input = myScan.next();
             }
             fR = Integer.valueOf(input);
+            valid = checkers.currentBoard().checkValid(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
         }
 
         return (new int[]{iR, iC, fR, fC});
