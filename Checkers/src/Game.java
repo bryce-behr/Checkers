@@ -31,6 +31,11 @@ public class Game {
         return turn;
     }
 
+    public void incTurn(){
+        count += 1;
+        turn = count % 2;
+    }
+
     /**
      * Getter
      * @return boards member variable
@@ -68,6 +73,12 @@ public class Game {
     public void makeMove(Square oldSquare, Square newSquare){
         Board newBoard = boards.peek().makeMove(oldSquare, newSquare);
         boards.push(newBoard);
+        count += 1;
+        turn = count % 2;
+    }
+
+    public void makeRandomMove(int color){
+        boards.push(currentBoard().makeRandomMove(color));
         count += 1;
         turn = count % 2;
     }

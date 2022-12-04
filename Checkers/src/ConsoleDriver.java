@@ -33,6 +33,7 @@ public class ConsoleDriver {
 
         valid = false;
         while (valid == false) {
+            System.out.println(checkers.currentBoard().toString());
             /*
             System.out.println("Player " + (checkers.getTurn() + 1) + ": please enter the column number of the piece you would like to move");
             input = myScan.next();
@@ -81,6 +82,7 @@ public class ConsoleDriver {
 
         valid = false;
         while (valid == false) {
+            System.out.println(checkers.currentBoard().toString());
             System.out.println("Player " + (checkers.getTurn() + 1) + " please enter the column number of the square you would like to move the piece to");
             if (myScan.hasNextLine()) {
                 input = myScan.next();
@@ -100,7 +102,13 @@ public class ConsoleDriver {
                 input = myScan.next();
             }
             fR = Integer.valueOf(input);
-            valid = checkers.currentBoard().checkValid(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
+
+            if (checkers.currentBoard().checkValid((checkers.currentBoard().getSquare(iR, iC)), (checkers.currentBoard().getSquare(fR, fC))) == true){
+                valid = true;
+            }
+            else{
+                System.out.println("You are moving to an invalid square");
+            }
         }
 
         return (new int[]{iR, iC, fR, fC});
@@ -144,6 +152,53 @@ public class ConsoleDriver {
      * runs a loop for a checkers game against the computer
      */
     public static void onePlayerGame(){
+        int team = 0;
+        int comp = 0;
+        checkers = new Game();
+        System.out.println(checkers.currentBoard().toString());
+
+        Scanner myScan = new Scanner(System.in);
+        String input = "";
+
+        System.out.println("Would you like to be X's or O's ?");
+        System.out.println("Pleas enter '0' to be X's and '1' to be O's");
+
+        input = myScan.next();
+        while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 1))) {
+            System.out.println("Please enter eiter '0' or '1'");
+            input = myScan.next();
+        }
+        team = Integer.valueOf(input);
+        if (team == 0){
+            comp = 1;
+        }
+        else{
+            comp = -1;
+        }
+
+        while (checkers.hasWon() == false){
+            if (checkers.getTurn() != team){
+                checkers.makeRandomMove(comp);
+                //checkers.incTurn();
+                System.out.println(checkers.currentBoard().toString());
+                System.out.println("Your move");
+            }
+            else{
+                int[] coordinates = askPlayers(checkers.getTurn());
+                int iR = coordinates[0];
+                int iC = coordinates[1];
+                int fR = coordinates[2];
+                int fC = coordinates[3];
+
+                checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
+            }
+        }
+        if (checkers.getTurn() == team){
+            System.out.println("You have won the game");
+        }
+        else{
+            System.out.println("You have lost the game");
+        }
 
     }
 
@@ -152,11 +207,9 @@ public class ConsoleDriver {
      * runs a loop for a checkers game against another player
      */
     public static void twoPlayerGame(){
-
         checkers = new Game();
 
         System.out.println("Player " + (checkers.getTurn() + 1) + " starts the game");
-        System.out.println(checkers.currentBoard().toString());
 
         while (checkers.hasWon() == false){
             int[] coordinates = askPlayers(checkers.getTurn());
@@ -174,13 +227,11 @@ public class ConsoleDriver {
             }
 
             checkers.makeMove(checkers.currentBoard().getSquare(iR, iC), checkers.currentBoard().getSquare(fR, fC));
-            System.out.println(checkers.currentBoard().toString());
 
             int back = askBack();
 
             if (back == 1){
                 checkers.back();
-                System.out.println(checkers.currentBoard().toString());
             }
         }
         System.out.println("Player" + (checkers.getTurn() + 1) + "has won the ");
