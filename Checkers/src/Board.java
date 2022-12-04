@@ -32,11 +32,11 @@ public class Board {
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
 
-        System.out.print("Possible Moves of (c" + oldSquare.getC() + ", r" + oldSquare.getR() + "): ");
+        /*System.out.print("Possible Moves of (c" + oldSquare.getC() + ", r" + oldSquare.getR() + "): ");
         for(Square sqr: possibleMoves) {
             System.out.print("(c" + sqr.getC() + ", r" + sqr.getR() + "), ");
         }
-        System.out.println();
+        System.out.println(); */
 
         return possibleMoves.contains(newSquare);
     }
@@ -78,6 +78,8 @@ public class Board {
             }
             newBoard.getSquare(oldSquare.getR(), oldSquare.getC()).setTeam(0);
         }
+
+        System.out.println(newBoard.toString());
         return newBoard;
     }
 
@@ -231,10 +233,10 @@ public class Board {
      */
     public String toString() {
         StringBuilder theBoard = new StringBuilder();
-        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        theBoard.append("    a   b   c   d   e   f   g   h\n");
         for(int r = 0; r < 17; r++) {
             if(r%2 != 0) {
-                theBoard.append((r - 1) / 2).append(" ");
+                theBoard.append(Math.abs(((r - 1) / 2) - 7) + 1).append(" ");
             }
             else {
                 theBoard.append("  ");
@@ -257,23 +259,20 @@ public class Board {
                     theBoard.append("|");
                 }
                 else {
-                    //theBoard += " ";
                     int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
                     if(temp < 0) theBoard.append(" X").append(" ");
-                    //if(temp < 0) theBoard.append(temp).append(" ");
                     else if (temp == 0) theBoard.append(" ").append(" ").append(" ");
                     else theBoard.append(" ").append("O").append(" ");
-                    //else theBoard.append(" ").append(temp).append(" ");
                 }
             }
 
             if(r%2 != 0) {
-                theBoard.append(" ").append((r - 1) / 2);
+                theBoard.append(" ").append(Math.abs(((r - 1) / 2) - 7) + 1);
             }
 
             theBoard.append("\n");
         }
-        theBoard.append("    0   1   2   3   4   5   6   7\n");
+        theBoard.append("    a   b   c   d   e   f   g   h\n");
         return theBoard.toString();
     }
 }
