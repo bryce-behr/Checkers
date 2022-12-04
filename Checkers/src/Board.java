@@ -32,9 +32,9 @@ public class Board {
     public boolean checkValid(Square oldSquare, Square newSquare) {
         ArrayList<Square> possibleMoves = getPossibleMoves(oldSquare);
 
-        System.out.print("Possible Moves of (" + oldSquare.getR() + ", " + oldSquare.getC() + "): ");
+        System.out.print("Possible Moves of (c" + oldSquare.getC() + ", r" + oldSquare.getR() + "): ");
         for(Square sqr: possibleMoves) {
-            System.out.print("(r" + sqr.getR() + ", c" + sqr.getC() + "), ");
+            System.out.print("(c" + sqr.getC() + ", r" + sqr.getR() + "), ");
         }
         System.out.println();
 

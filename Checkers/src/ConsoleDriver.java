@@ -28,10 +28,12 @@ public class ConsoleDriver {
         boolean valid = false;
 
         Scanner myScan = new Scanner(System.in);
+        Scanner validScanner;
         String input = "";
 
         valid = false;
         while (valid == false) {
+            /*
             System.out.println("Player " + (checkers.getTurn() + 1) + ": please enter the column number of the piece you would like to move");
             input = myScan.next();
             while (!((Integer.valueOf(input) >= 0) && (Integer.valueOf(input) <= 7))) {
@@ -48,8 +50,16 @@ public class ConsoleDriver {
                         "0 and 7 for the row number of the piece you would like to move");
                 input = myScan.next();
             }
-            iR = Integer.valueOf(input);
+            iR = Integer.valueOf(input); */
 
+            System.out.print("Player" + (checkers.getTurn() +1)  + " which piece would you like to move: ");
+            input = myScan.next();
+            while(!checkValid(input)) {
+                System.out.print("Invalid Input: Enter piece coordinates in proper notation i.e. \"b4\": ");
+                input = myScan.next();
+            }
+            iC = input.charAt(0) - 97;
+            iR = input.charAt(1) - 48;
 
             if (checkers.currentBoard().getSquare(iR, iC).getTeam() > 0){
                 team = 1;
@@ -210,5 +220,46 @@ public class ConsoleDriver {
             System.out.println("Starting new game");
         }
         System.out.println("PROGRAM CLOSED");
+    }
+
+    private static boolean checkValid(String str) {
+        /*
+        Scanner sc = new Scanner(str);
+        sc.useDelimiter(",");
+        String tempStr;
+        char tempChar;
+
+        if(sc.hasNext()){
+            tempStr = sc.next();
+            if(tempStr.length() == 1) {
+                tempChar = tempStr.charAt(0);
+                if((int)tempChar < 97 || (int)tempChar > 104) return false;
+            }
+            else return false;
+        }
+        else return false;
+
+        if(sc.hasNext()){
+            tempStr = sc.next();
+            if(tempStr.length() == 1) {
+                tempChar = tempStr.charAt(0);
+                if((int)tempChar < 48 || (int)tempChar > 55) return false;
+            }
+            else return false;
+        }
+        else
+            return false;
+
+        return !sc.hasNext(); */
+
+        char tempChar;
+        int tempInt;
+
+        if(str.length() == 2) {
+            tempChar = str.charAt(0);
+            tempInt = (int)str.charAt(1);
+            return (int) tempChar >= 97 && (int) tempChar <= 104 && tempInt >= 48 && tempInt <= 55;
+        }
+        else return false;
     }
 }
