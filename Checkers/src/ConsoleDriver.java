@@ -90,6 +90,7 @@ public class ConsoleDriver {
                 input = myScan.next();
             }
             fR = Integer.valueOf(input);
+            valid = true;
         }
 
         return (new int[]{iR, iC, fR, fC});
