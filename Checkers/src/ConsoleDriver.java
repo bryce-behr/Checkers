@@ -92,7 +92,7 @@ public class ConsoleDriver {
         Scanner myScan = new Scanner(System.in);
         System.out.print("Do you want to go back? Enter 1 if you would like to go back and 2 if not: ");
         String input = myScan.next();
-        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
+        while (input.length() != 1 || (int)input.charAt(0) < 49 || (int)input.charAt(0) > 50) {
             System.out.print("Player " + (checkers.getTurn() +1) + " the previous value you entered was invalid, please enter either a 1 or 2: ");
             input = myScan.next();
         }

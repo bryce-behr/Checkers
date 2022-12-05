@@ -260,9 +260,16 @@ public class Board {
                 }
                 else {
                     int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
-                    if(temp < 0) theBoard.append(" X").append(" ");
+                    if(temp < 0)
+                    {
+                        if(temp == -1) theBoard.append(" x").append(" ");
+                        else if(temp == -2) theBoard.append(" X").append(" ");
+                    }
                     else if (temp == 0) theBoard.append(" ").append(" ").append(" ");
-                    else theBoard.append(" ").append("O").append(" ");
+                    else {
+                        if(temp == 1) theBoard.append(" ").append("o").append(" ");
+                        else if(temp == 2) theBoard.append(" ").append("O").append(" ");
+                    }
                 }
             }
 
@@ -276,6 +283,11 @@ public class Board {
         return theBoard.toString();
     }
 
+    /**
+     * this method gets all possible moves of a square that are jumps
+     * @param sqr1 the original square in question
+     * @return an arraylist of square that the original piece could jump to
+     **/
     public ArrayList<Square> getJumpMoves(Square sqr1) {
         int r = sqr1.getR();
         ArrayList<Square> jumps = getPossibleMoves(sqr1);
