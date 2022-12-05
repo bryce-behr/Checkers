@@ -275,4 +275,17 @@ public class Board {
         theBoard.append("    a   b   c   d   e   f   g   h\n");
         return theBoard.toString();
     }
+
+    public ArrayList<Square> getJumpMoves(Square sqr1) {
+        int r = sqr1.getR();
+        ArrayList<Square> jumps = getPossibleMoves(sqr1);
+
+        for(Square sqr2 : jumps) {
+            if(Math.abs(r - sqr2.getR()) < 2) {
+                jumps.remove(sqr2);
+            }
+        }
+
+        return jumps;
+    }
 }
