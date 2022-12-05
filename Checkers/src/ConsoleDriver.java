@@ -51,7 +51,7 @@ public class ConsoleDriver {
                 team = 2;
             }
 
-            if (team == cteam){
+            if (team == cteam && checkers.currentBoard().getPossibleMoves(checkers.currentBoard().getSquare(iR, iC)).size() > 0){
                 valid = true;
             }
             else{
