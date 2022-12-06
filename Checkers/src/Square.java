@@ -83,4 +83,9 @@ public class Square {
     public void setTeam(int team){
         this.team = team;
     }
+
+    @Override
+    public String toString(){
+       return ("(Row[" + r + "] Column[" + c + "] Team[" + team + "])");
+    }
 }

@@ -231,6 +231,7 @@ public class Board {
      * this method prints out the current board including lines and r and c labels
      * @return a String of the current board
      */
+    @Override
     public String toString() {
         StringBuilder theBoard = new StringBuilder();
         theBoard.append("    a   b   c   d   e   f   g   h\n");
@@ -260,6 +261,7 @@ public class Board {
                 }
                 else {
                     int temp = getSquare((r-1)/2, (c-1)/2).getTeam();
+
                     if(temp < 0)
                     {
                         if(temp == -1) theBoard.append(" x").append(" ");
@@ -291,13 +293,14 @@ public class Board {
     public ArrayList<Square> getJumpMoves(Square sqr1) {
         int r = sqr1.getR();
         ArrayList<Square> jumps = getPossibleMoves(sqr1);
+        ArrayList<Square> doubleJumps = new ArrayList<>();
 
         for(Square sqr2 : jumps) {
-            if(Math.abs(r - sqr2.getR()) < 2) {
-                jumps.remove(sqr2);
+            if(Math.abs(r - sqr2.getR()) == 2) {
+                doubleJumps.add(sqr2);
             }
         }
 
-        return jumps;
+        return doubleJumps;
     }
 }

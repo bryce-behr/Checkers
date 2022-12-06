@@ -72,6 +72,11 @@ public class Game {
      */
     public void makeMove(Square oldSquare, Square newSquare){
         Board newBoard = boards.peek().makeMove(oldSquare, newSquare);
+        //if (currentBoard().getJumpMoves(oldSquare).contains(oldSquare)){
+        if ((newBoard.getJumpMoves(newBoard.getSquare((newSquare.getR()), (newSquare.getC())))).size() > 0){
+            count -= 1;
+        }
+
         boards.push(newBoard);
         count += 1;
         turn = count % 2;
