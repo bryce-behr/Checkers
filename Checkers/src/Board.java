@@ -272,7 +272,6 @@ public class Board {
                         if(temp == 1) theBoard.append(" ").append("o").append(" ");
                         else if(temp == 2) theBoard.append(" ").append("O").append(" ");
                     }
-
                 }
             }
 
