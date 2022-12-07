@@ -296,7 +296,7 @@ public class Board {
         ArrayList<Square> doubleJumps = new ArrayList<>();
 
         for(Square sqr2 : jumps) {
-            if(Math.abs(r - sqr2.getR()) == 2) {
+            if((Math.abs(r - sqr2.getR())) == 2) {
                 doubleJumps.add(sqr2);
             }
         }
