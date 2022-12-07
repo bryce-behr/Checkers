@@ -110,7 +110,7 @@ public class ConsoleDriver {
         System.out.println("Would you like to play a one player game or a 2 player game of checkers?");
         System.out.println("enter a '1' to play a one player game and enter '2' to play a 2 player game");
         String input = myScan.next();
-        while (!((Integer.valueOf(input) >= 1)&&(Integer.valueOf(input) <=2))){
+        while (input.length() != 1 || (int)input.charAt(0) < 49 || (int)input.charAt(0) > 50){
             System.out.println("The previous value you entered was invalid, You entered: " + input +" please enter either a '1' or '2'");
             input = myScan.next();
         }
