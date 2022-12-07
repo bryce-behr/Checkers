@@ -71,7 +71,7 @@ public class Game {
      * @param newSquare the new square you want to move to
      */
     public void makeMove(Square oldSquare, Square newSquare){
-        System.out.println("count: " + count);
+        //System.out.println("count: " + count);
         Board newBoard = boards.peek().makeMove(oldSquare, newSquare);
         if(currentBoard().getJumpMoves(oldSquare).contains(newSquare)) {
             if ((newBoard.getJumpMoves(newBoard.getSquare(newSquare.getR(), newSquare.getC()))).size() > 0) {
@@ -79,11 +79,11 @@ public class Game {
             }
         }
 
-        System.out.println((newBoard.getJumpMoves(newBoard.getSquare(newSquare.getR(), newSquare.getC()))));
+        //System.out.println((newBoard.getJumpMoves(newBoard.getSquare(newSquare.getR(), newSquare.getC()))));
         boards.push(newBoard);
         count += 1;
         turn = count % 2;
-        System.out.println("count: " + count);
+        //System.out.println("count: " + count);
     }
 
     public void makeRandomMove(int color){
